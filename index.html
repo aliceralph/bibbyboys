@@ -96,24 +96,43 @@
             object-fit: contain;
             border-radius: 2px;
             box-shadow: none;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition-delay: 0.3s; /* Image loads first, before caption */
+        }
+
+        .slide.active .slide-image {
+            opacity: 1;
+            transform: scale(1);
         }
 
         .slide-caption {
             position: absolute;
-            bottom: 40px;
-            right: 40px;
+            bottom: 30px;
+            right: 30px;
             max-width: 350px;
             font-size: 14px;
             line-height: 1.4;
             font-weight: 300;
             text-align: right;
             opacity: 0;
-            transition: opacity 1s ease;
-            transition-delay: 1s;
+            transform: translateY(20px);
+            transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition-delay: 1.2s; /* Caption loads after image */
         }
+
+        .slide-caption h2 {
+            margin-bottom: 0px;
+        }
+
+        .slide-bg-1 .slide-caption h2 { color: #f2eee4; } /* White/cream on red background */
+        .slide-bg-2 .slide-caption h2 { color: #f2eee4; } /* Cream on dark background */
+        .slide-bg-3 .slide-caption h2 { color: #e75127; } /* Red on light background */
 
         .slide.active .slide-caption {
             opacity: 0.9;
+            transform: translateY(0);
         }
 
         .donate-button {
@@ -150,6 +169,20 @@
             display: none;
         }
 
+        .arrow-up, .arrow-down {
+            line-height: 1;
+            margin: 2px 0;
+            transition: transform 0.2s ease;
+        }
+
+        .arrow-up:hover {
+            transform: translateY(-1px);
+        }
+
+        .arrow-down:hover {
+            transform: translateY(1px);
+        }
+
         @media (max-width: 768px) {
 
             .slide-caption {
@@ -165,9 +198,9 @@
 
             .slide-caption h2 {
                 font-size: clamp(1rem, 4vw, 2rem);
-                margin-bottom: clamp(8px, 2vw, 16px);
                 line-height: 1.1;
             }
+
         }
 
         .slide-bg-1 .slide-caption { color: #f2eee4; }
@@ -347,7 +380,7 @@
         }
 
         .page p {
-            font-size: 1.1rem;
+            font-size: 1.7rem;
             line-height: 1.6;
             margin-bottom: 20px;
             max-width: 800px;
