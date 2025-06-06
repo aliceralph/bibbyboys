@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bibby Boys</title>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Fjalla+One&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'EB Garamond', serif;
+            overflow: hidden;
+            background: #1d0301;
+            cursor: default;
+        }
+
+        .site-title {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            z-index: 100;
+            opacity: 0;  /* Remove !important */
+            transition: opacity 0.3s ease;
+            color: #e75127;  /* Remove !important */
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            font-family: 'Fjalla One', sans-serif;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            font-family: 'Fjalla One', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .slide-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(100vh);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 1;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateY(0);
+            z-index: 10;
+        }
+
+        .slide.prev {
+            opacity: 1;
+            transform: translateY(0);
+            z-index: 5;
+        }
+
+        .slide-bg-1 { background-color: #e75127; }
+        .slide-bg-2 { background-color: #1d0301; }
+        .slide-bg-3 { background-color: #f2eee4; }
+
+        .slide-image {
+            max-width: 80%;
+            max-height: 80%;
+            object-fit: contain;
+            border-radius: 2px;
+            box-shadow: none;
+        }
+
+        .slide-caption {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            max-width: 350px;
+            font-size: 14px;
+            line-height: 1.4;
+            font-weight: 300;
+            text-align: right;
+            opacity: 0;
+            transition: opacity 1s ease;
+            transition-delay: 1s;
+        }
+
+        .slide.active .slide-caption {
+            opacity: 0.9;
+        }
+
+        .donate-button {
+            display: inline-block;
+            background: #e75127;
+            color: #f2eee4;
+            padding: 20px 40px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border-radius: 4px;
+            margin-top: 30px;
+            transition: background 0.3s ease;
+            font-family: 'Fjalla One', sans-serif;
+        }
+
+        .donate-button:hover {
+            background: #1d0301;
+        }
+
+        .slide.fullscreen .slide-image {
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            max-width: none;
+            max-height: none;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        .slide.fullscreen .slide-caption {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .slide-caption {
+                bottom: 20px;
+                right: 20px;
+                left: 20px;
+                max-width: none;
+                font-size: 12px;
+                text-align: right;
+            }
+        }
+
+        .slide-bg-1 .slide-caption { color: #f2eee4; }
+        .slide-bg-2 .slide-caption { color: #f2eee4; }
+        .slide-bg-3 .slide-caption { color: #1d0301; }
+
+        .large-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            font-weight: 700;
+            text-align: center;
+            letter-spacing: 0.1em;
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 15;
+        }
+
+        @media (max-width: 768px) {
+            .large-text {
+                font-size: 2rem;
+            }
+        }
+
+        .slide-bg-1 .large-text { color: #1d0301; }
+        .slide-bg-2 .large-text { color: #f2eee4; }
+        .slide-bg-3 .large-text { color: #e75127; }
+
+        .navigation {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .navigation {
+                top: 15px;
+                right: 15px;
+            }
+        }
+
+        .nav-menu {
+            background: rgba(29, 3, 1, 0.9);
+            padding: 20px;
+            border-radius: 2px;
+            backdrop-filter: blur(10px);
+            font-family: 'Fjalla One', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .nav-menu a {
+            color: #f2eee4;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 300;
+            margin: 0 0 15px 0;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: #e75127;
+        }
+
+        .nav-menu a:last-child {
+            margin-bottom: 0;
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            color: rgba(242, 238, 228, 0.6);
+            font-size: 12px;
+            font-weight: 300;
+            z-index: 100;
+            letter-spacing: 0.1em;
+            font-family: 'Fjalla One', sans-serif;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 768px) {
+            .slide-counter {
+                bottom: 15px;
+                left: 15px;
+                font-size: 10px;
+            }
+        }
+
+        .title-slide {
+            text-align: center;
+            color: #f2eee4;
+        }
+
+        .title-slide h1 {
+            font-size: 5rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            margin-bottom: 30px;
+            font-family: 'Fjalla One', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .title-slide p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            opacity: 0.8;
+            margin-bottom: 10px;
+            font-family: 'Fjalla One', sans-serif;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 768px) {
+            .title-slide h1 {
+                font-size: 2.5rem;
+                margin-bottom: 20px;
+            }
+            
+            .title-slide p {
+                font-size: 1rem;
+            }
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(242, 238, 228, 0.5);
+            font-size: 12px;
+            animation: fadeInOut 3s infinite;
+            font-family: 'Fjalla One', sans-serif;
+            text-transform: uppercase;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Page styles for other sections */
+        .page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f2eee4;
+            color: #1d0301;
+            padding: 60px;
+            overflow-y: auto;
+            transform: translateX(100%);
+            transition: transform 0.5s ease;
+            z-index: 200;
+        }
+
+        @media (max-width: 768px) {
+            .page {
+                padding: 30px 20px;
+            }
+        }
+
+        .page.active {
+            transform: translateX(0);
+        }
+
+        .page h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: #e75127;
+        }
+
+        .page p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            max-width: 800px;
+        }
+
+        @media (max-width: 768px) {
+            .page h2 {
+                font-size: 2rem;
+                margin-bottom: 20px;
+            }
+            
+            .page p {
+                font-size: 1rem;
+                line-height: 1.5;
+            }
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: #e75127;
+            color: #f2eee4;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #1d0301;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <!-- Title Slide -->
+        <div class="slide active slide-bg-2">
+            <div class="title-slide">
+                <h1>BIBBY BOYS</h1>
+                <p>Theo McInnes & Thomas Ralph</p>
+            </div>
+            <div class="scroll-hint">Scroll To Explore</div>
+        </div>
+
+        <!-- Photo Slides -->
+        <div class="slide slide-bg-1">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'%3E%3Crect width='800' height='600' fill='%234682B4'/%3E%3Ctext x='400' y='300' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 1%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+            <div class="slide-caption">
+                <h2>The road into Portland</h2>
+            </div>
+        </div>
+
+        <div class="slide slide-bg-3">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='800' viewBox='0 0 600 800'%3E%3Crect width='600' height='800' fill='%235F9EA0'/%3E%3Ctext x='300' y='400' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 2%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+            <div class="slide-caption">
+                <h2>Horse Therapy</h2>
+                <p>Ali, a horse trainer from Kuwait, holds a horse's mane at a local equine-assisted therapy centre. Ali wears a ring given to him by his brother in Iraq.</p>
+            </div>
+        </div>
+
+        <div class="slide fullscreen slide-bg-1">
+            <img src="https://images.unsplash.com/photo-1468581264429-2548ef9eb732?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Full screen image" class="slide-image">
+        </div>
+        
+
+        <div class="slide slide-bg-2">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='500' viewBox='0 0 900 500'%3E%3Crect width='900' height='500' fill='%232E8B57'/%3E%3Ctext x='450' y='250' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 3%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+            <div class="slide-caption">
+                <h2>James in Albion Stone</h2>
+                <p>James, a Maasai warrior and farmer, was forced to flee Kenya after intervening and rescuing girls from FGM. Here, he stands in a quarry of Portland stone, the same stone used to build St. Paul's Cathedral and Buckingham Palace. James spent eight months on the barge.</p>
+            </div>
+
+        </div>
+
+        <div class="slide slide-bg-1">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700' viewBox='0 0 700 700'%3E%3Crect width='700' height='700' fill='%234682B4'/%3E%3Ctext x='350' y='350' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 4%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+            <div class="slide-caption">
+                <h2>Military Exercises</h2>
+            </div>
+        </div>
+
+        <div class="slide slide-bg-3">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='500' viewBox='0 0 800 500'%3E%3Crect width='800' height='500' fill='%235F9EA0'/%3E%3Ctext x='400' y='250' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 5%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+            <div class="slide-caption">
+                <h2>Saeed on Chesil Beach</h2>
+                <p>After receiving a fishing rod from the Friendship Group, Saeed taught himself how to fish. He often spent nights alone on Chesil Beach, catching mackerel. The next day, he would cook his catch for other men on the beach. One night, Saeed caught 60 mackerel.</p>
+            </div>
+        </div>
+
+        <div class="slide slide-bg-2">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='900' viewBox='0 0 600 900'%3E%3Crect width='600' height='900' fill='%232E8B57'/%3E%3Ctext x='300' y='450' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 6%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+            <div class="slide-caption">
+                <h2>On Chesil Beach</h2>
+            </div>
+        </div>
+
+        <div class="slide slide-bg-1">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='850' height='600' viewBox='0 0 850 600'%3E%3Crect width='850' height='600' fill='%234682B4'/%3E%3Ctext x='425' y='300' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 7%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+            <div class="slide-caption">
+                <h2>The Coastal Path</h2>
+                <p>Close friends Dave, a local Portlander and historian, and Wilfred, an Ivorian seeking asylum, often walked the coastal path together. Here Dave shows Wilfred a rare bee orchid he found.</p>
+            </div>
+
+        </div>
+
+        <div class="slide slide-bg-3">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='800' viewBox='0 0 500 800'%3E%3Crect width='500' height='800' fill='%235F9EA0'/%3E%3Ctext x='250' y='400' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 8%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+            <div class="slide-caption">
+                <h2>Bee Orchid</h2>
+            </div>
+        </div>
+
+        <div class="slide slide-bg-2">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='600' viewBox='0 0 900 600'%3E%3Crect width='900' height='600' fill='%232E8B57'/%3E%3Ctext x='450' y='300' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 9%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+            <div class="slide-caption">
+                <h2>Hassan &amp; Wilfred</h2>
+            </div>
+        </div>
+
+        <div class="slide slide-bg-1">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='800' viewBox='0 0 700 800'%3E%3Crect width='700' height='800' fill='%234682B4'/%3E%3Ctext x='350' y='400' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 10%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+            <div class="slide-caption">
+                <h2>Royjar</h2>  
+                <p>Royjar was forced to flee Iran after he helped organise the Mahsa Amini uprising. Onboard the Bibby, Royjar helped orchestrate the hunger strikes demanding its closure. He volunteered in charity shops and would often swim off Weymouth beach.</p>
+            </div>
+        </div>
+
+        <div class="slide slide-bg-3">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='700' viewBox='0 0 800 700'%3E%3Crect width='800' height='700' fill='%235F9EA0'/%3E%3Ctext x='400' y='350' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 11%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+            <div class="slide-caption">
+                <h2>Royjar in the English Channel</h2>
+            </div>
+
+        </div>
+
+        <div class="slide slide-bg-2">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'%3E%3Crect width='600' height='600' fill='%232E8B57'/%3E%3Ctext x='300' y='300' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 12%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+            <div class="slide-caption">
+                <h2>Weymouth Seafront</h2>
+                <p>People seeking asylum are legally unable to work and only get payments of &pound;8.86 a week. Therefore for the men, much time was spent waiting on Weymouth seafront.</p>
+            </div>
+        </div>
+
+        <div class="slide slide-bg-1">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='750' height='650' viewBox='0 0 750 650'%3E%3Crect width='750' height='650' fill='%234682B4'/%3E%3Ctext x='375' y='325' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 13%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+            <div class="slide-caption">
+                <h2>Morning Swim</h2>
+            </div>
+        </div>
+
+        <div class="slide slide-bg-3">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='650' height='850' viewBox='0 0 650 850'%3E%3Crect width='650' height='850' fill='%235F9EA0'/%3E%3Ctext x='325' y='425' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 14%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+            <div class="slide-caption">
+                <h2>Boxing Class</h2>
+            </div>
+        </div>
+
+        <div class="slide slide-bg-2">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='550' viewBox='0 0 800 550'%3E%3Crect width='800' height='550' fill='%232E8B57'/%3E%3Ctext x='400' y='275' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 15%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+            <div class="slide-caption">
+                <h2>Shoe Donation</h2>
+                <p>A group of men gather around Kay and Gary's car as they deliver trainers supplied by Care4Calais.</p>
+            </div>
+
+        </div>
+
+        <div class="slide slide-bg-1">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='700' viewBox='0 0 900 700'%3E%3Crect width='900' height='700' fill='%234682B4'/%3E%3Ctext x='450' y='350' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 16%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+            <div class="slide-caption">
+                <h2>Annie and Simon's garden</h2>
+                <p>A summer BBQ thanking the men for digging out and building a local pond. On the day of the party there were violent right-wing protests across the UK, including one in nearby Weymouth.</p>
+            </div>
+        </div>
+
+        <div class="slide slide-bg-3">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='550' height='750' viewBox='0 0 550 750'%3E%3Crect width='550' height='750' fill='%235F9EA0'/%3E%3Ctext x='275' y='375' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 17%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+            <div class="slide-caption">
+                <h2>Lucy at the community venue and saying goodbye</h2>
+            </div>
+        </div>
+
+        <div class="slide slide-bg-2">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='600' viewBox='0 0 700 600'%3E%3Crect width='700' height='600' fill='%232E8B57'/%3E%3Ctext x='350' y='300' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 18%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+            <div class="slide-caption">
+                <h2>Language Cards</h2>
+            </div>
+        </div>
+
+        <div class="slide slide-bg-1">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='650' viewBox='0 0 800 650'%3E%3Crect width='800' height='650' fill='%234682B4'/%3E%3Ctext x='400' y='325' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 19%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+            <div class="slide-caption">
+                <h2>Efrem at the Portland Community Venue</h2>
+                <p>Like many Eritreans on the barge, Efrem fled human rights abuses and the indefinite, voluntary conscription of his homeland.</p>
+            </div>
+
+        </div>
+
+        <div class="slide slide-bg-3">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='750' viewBox='0 0 600 750'%3E%3Crect width='600' height='750' fill='%235F9EA0'/%3E%3Ctext x='300' y='375' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 20%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+            <div class="slide-caption">
+                <h2>I Missed The Bread</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="site-title">Bibby Boys</div>
+
+    <div class="navigation">
+        <nav class="nav-menu">
+            <a href="#" onclick="showPage('about')">About</a>
+            <a href="#" onclick="showPage('donate')">Donate</a>
+            <a href="#" onclick="showPage('contact')">Contact</a>
+        </nav>
+    </div>
+
+    <div class="slide-counter">
+        <span id="current-slide">01</span> / <span id="total-slides">22</span>
+    </div>
+
+    <!-- Other Pages -->
+    <div id="about-page" class="page">
+        <button class="back-btn" onclick="closePage()">✕</button>
+        <h2>About</h2>
+        <p>Bibby Boys documents the stories of the men seeking asylum aboard the Bibby Stockholm barge and the community that rallied around them. It is a collaborative photo project by Theo McInnes and Thomas Ralph.</p>
+        <p>Between August 2023 and November 2024, the small Isle of Portland, Dorset, found itself at the heart of a national controversy. The arrival of the Bibby Stockholm sparked local tension, resistance, and debate. As the men onboard waited indefinitely for their asylum interviews, critics condemned the barge's cramped conditions, limited facilities, and the isolating effect of confining vulnerable people, cut off from mainland communities.</p>
+        <p>We hope Bibby Boys stands as a testament to the men's enduring spirit in the face of a system that often neglects their humanity, and as an example for new forms of community in times of polarisation and global displacement.</p>
+    </div>
+
+    <div id="donate-page" class="page">
+        <button class="back-btn" onclick="closePage()">✕</button>
+        <h2>Donate</h2>
+        <p>Support the ongoing work helping asylum seekers and refugees through Care4Calais and other organizations working on the front lines.</p>
+        <p>The Portland Global Friendship Group continues to support displaced people across the UK. Your donation helps provide practical support, friendship, and advocacy for those seeking safety and a new beginning.</p>
+        <p>Every contribution, no matter how small, makes a difference in someone's life.</p>
+        <a href="https://care4calais.org/donate/" target="_blank" class="donate-button">
+            DONATE
+        </a>
+    </div>
+
+    <div id="contact-page" class="page">
+        <button class="back-btn" onclick="closePage()">✕</button>
+        <h2>Contact</h2>
+        <p>For inquiries about Bibby Boys, exhibition opportunities, or to share your thoughts on this project:</p>
+        <p><strong>Theo McInnes & Thomas Ralph</strong></p>
+        <p>Email: [Contact Email]</p>
+        <p>We'd love to chat about how we might collaborate to bring Bibby Boys to life...</p>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        document.getElementById('total-slides').textContent = totalSlides.toString().padStart(2, '0');
+
+        function updateSlideCounter() {
+            document.getElementById('current-slide').textContent = (currentSlide + 1).toString().padStart(2, '0');
+        }
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active', 'prev');
+                if (i === index) {
+                    slide.classList.add('active');
+                } else if (i === index - 1) {
+                    slide.classList.add('prev');
+                }
+            });
+            updateSlideCounter();
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        }
+
+        // Scroll navigation
+        let scrollTimeout;
+        document.addEventListener('wheel', (e) => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                if (e.deltaY > 0) {
+                    nextSlide();
+                } else {
+                    prevSlide();
+                }
+            }, 50);
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                prevSlide();
+            }
+        });
+
+        // Page navigation
+        function showPage(pageId) {
+            document.getElementById(pageId + '-page').classList.add('active');
+        }
+
+        function closePage() {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+        }
+
+        // Initialize
+        showSlide(0);
+
+        // Menu auto-hide functionality
+            let menuTimeout;
+            const navigation = document.querySelector('.navigation');
+            const siteTitle = document.querySelector('.site-title');
+
+            function showMenu() {
+                navigation.style.opacity = '1';
+                siteTitle.style.opacity = '1';
+                
+                // Clear existing timeout
+                clearTimeout(menuTimeout);
+                
+                // Set new timeout to hide after 1 second
+                menuTimeout = setTimeout(() => {
+                    navigation.style.opacity = '0';
+                    siteTitle.style.opacity = '0';
+                }, 1000);
+            }
+
+            // Show menu on mouse movement
+            document.addEventListener('mousemove', showMenu);
+
+            // Show menu on touch (mobile)
+            document.addEventListener('touchstart', showMenu);
+
+            // Show menu initially
+            showMenu();
+
+        // Add these for better navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closePage();
+                if (e.key === 'Home') { currentSlide = 0; showSlide(0); }
+                if (e.key === 'End') { currentSlide = totalSlides-1; showSlide(currentSlide); }
+            });
+
+        // Add swipe detection for mobile
+            let touchStartY = 0;
+            document.addEventListener('touchstart', e => touchStartY = e.touches[0].clientY);
+            document.addEventListener('touchend', e => {
+                const touchEndY = e.changedTouches[0].clientY;
+                const diff = touchStartY - touchEndY;
+                if (Math.abs(diff) > 50) { // Minimum swipe distance
+                    diff > 0 ? nextSlide() : prevSlide();
+                }
+            });
+
+    </script>
+</body>
+</html>
