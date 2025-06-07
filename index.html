@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bibby Boys</title>
+    <link rel="stylesheet" href="https://use.typekit.net/nql1ooh.css">
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Fjalla+One&display=swap" rel="stylesheet">
     <style>
         * {
@@ -30,7 +31,7 @@
             font-size: 18px;
             font-weight: 700;
             letter-spacing: 0.1em;
-            font-family: 'Fjalla One', sans-serif;
+            font-family: 'octin-vintage', 'Fjalla One', sans-serif;
             text-transform: uppercase;
         }
 
@@ -48,7 +49,7 @@
             font-size: 3rem;
             font-weight: 700;
             margin-bottom: 24px;
-            font-family: 'Fjalla One', sans-serif;
+            font-family: 'octin-vintage', 'Fjalla One', sans-serif;
             text-transform: uppercase;
         }
 
@@ -111,8 +112,8 @@
             position: absolute;
             bottom: 30px;
             right: 30px;
-            max-width: 350px;
-            font-size: 14px;
+            max-width: 360px;
+            font-size: small;
             line-height: 1.4;
             font-weight: 300;
             text-align: right;
@@ -135,6 +136,45 @@
             transform: translateY(0);
         }
 
+        .slide-double {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            padding: 40px;
+        }
+
+        .slide-double .slide-image {
+            max-width: calc(50% - 10px); /* 50% minus half the gap */
+            max-height: 80vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            flex-shrink: 1;
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            .slide-double {
+                flex-direction: column;
+                gap: 15px;
+                padding: 20px;
+            }
+            
+            .slide-double .slide-image {
+                max-width: 90%;
+                max-height: 40vh; /* Smaller on mobile so both fit */
+            }
+        }
+
+        /* Very small screens - single column */
+        @media (max-width: 480px) {
+            .slide-double .slide-image {
+                max-width: 95%;
+                max-height: 35vh;
+            }
+        }
+
         .donate-button {
             display: inline-block;
             background: #e75127;
@@ -148,7 +188,7 @@
             border-radius: 4px;
             margin-top: 30px;
             transition: background 0.3s ease;
-            font-family: 'Fjalla One', sans-serif;
+            font-family: 'octin-vintage', 'Fjalla One', sans-serif;
         }
 
         .donate-button:hover {
@@ -159,14 +199,11 @@
             width: 100vw;
             height: 100vh;
             object-fit: cover;
+            object-position: center center; /* This centers the image */
             max-width: none;
             max-height: none;
             border-radius: 0;
             box-shadow: none;
-        }
-
-        .slide.fullscreen .slide-caption {
-            display: none;
         }
 
         .arrow-up, .arrow-down {
@@ -197,7 +234,7 @@
             }
 
             .slide-caption h2 {
-                font-size: clamp(1rem, 4vw, 2rem);
+                font-size: x-large;
                 line-height: 1.1;
             }
 
@@ -248,11 +285,11 @@
         }
 
         .nav-menu {
-            background: rgba(29, 3, 1, 0.9);
+            background: rgba(29, 3, 1, 0.2);
             padding: 20px;
             border-radius: 2px;
             backdrop-filter: blur(10px);
-            font-family: 'Fjalla One', sans-serif;
+            font-family: 'octin-vintage', 'Fjalla One', sans-serif;
             text-transform: uppercase;
         }
 
@@ -283,7 +320,7 @@
             font-weight: 300;
             z-index: 100;
             letter-spacing: 0.1em;
-            font-family: 'Fjalla One', sans-serif;
+            font-family: 'octin-vintage', 'Fjalla One', sans-serif;
             text-transform: uppercase;
         }
 
@@ -298,14 +335,15 @@
         .title-slide {
             text-align: center;
             color: #f2eee4;
+            position: absolute;
         }
 
         .title-slide h1 {
-            font-size: 5rem;
+            font-size: 11rem;
             font-weight: 700;
             letter-spacing: 0.1em;
             margin-bottom: 30px;
-            font-family: 'Fjalla One', sans-serif;
+            font-family: 'octin-vintage', 'Fjalla One', sans-serif;
             text-transform: uppercase;
         }
 
@@ -314,7 +352,7 @@
             font-weight: 300;
             opacity: 0.8;
             margin-bottom: 10px;
-            font-family: 'Fjalla One', sans-serif;
+            font-family: 'octin-vintage', 'Fjalla One', sans-serif;
             text-transform: uppercase;
         }
 
@@ -331,13 +369,13 @@
 
         .scroll-hint {
             position: absolute;
-            bottom: 50px;
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            color: rgba(242, 238, 228, 0.5);
-            font-size: 12px;
+            color: rgba(242, 238, 228, 0.7);
+            font-size: 14px;
             animation: fadeInOut 3s infinite;
-            font-family: 'Fjalla One', sans-serif;
+            font-family: 'octin-vintage', 'Fjalla One', sans-serif;
             text-transform: uppercase;
         }
 
@@ -420,7 +458,8 @@
 <body>
     <div class="slide-container">
         <!-- Title Slide -->
-        <div class="slide active slide-bg-2">
+        <div class="slide active slide-bg-1">
+            <img src="/images/Bibby_Webs_28.jpg" alt="Bibby Boys" class="slide-image">
             <div class="title-slide">
                 <h1>BIBBY BOYS</h1>
                 <p>Theo McInnes & Thomas Ralph</p>
@@ -429,15 +468,31 @@
         </div>
 
         <!-- Photo Slides -->
-        <div class="slide slide-bg-1">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'%3E%3Crect width='800' height='600' fill='%234682B4'/%3E%3Ctext x='400' y='300' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 1%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+
+        <div class="slide slide-bg-3">
+            <img src="/images/Bibby_Webs_11.jpg" alt="Portland, Dorset" class="slide-image">
             <div class="slide-caption">
-                <h2>The road into Portland</h2>
+                <h2>We want to tell you about a project we've been working on for over a year</h2>
+            </div>
+        </div>
+
+        <div class="slide slide-bg-2">
+            <img src="/images/Bibby_Webs_1.jpg" alt="Bibby Boys" class="slide-image">
+            <div class="slide-caption">
+                <h2>Bibby Boys</h2>
+                <p>Bibby Boys documents the stories of the men seeking asylum aboard the Bibby Stockholm barge and the community that rallied around them. It is a collaborative photo project by Theo McInnes and Thomas Ralph.</h2>
+            </div>
+        </div>
+
+        <div class="slide fullscreen slide-bg-1">
+            <img src="/images/Bibby-Screenshot-Into-Portland.jpg" alt="The Road Into Portland" class="slide-image">
+            <div class="slide-caption">
+                <h2>The Road Into Portland</h2>
             </div>
         </div>
 
         <div class="slide slide-bg-3">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='800' viewBox='0 0 600 800'%3E%3Crect width='600' height='800' fill='%235F9EA0'/%3E%3Ctext x='300' y='400' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 2%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+            <img src="/images/Bibby_Webs_23.jpg" alt="Horse Therapy" class="slide-image">
             <div class="slide-caption">
                 <h2>Horse Therapy</h2>
                 <p>Ali, a horse trainer from Kuwait, holds a horse's mane at a local equine-assisted therapy centre. Ali wears a ring given to him by his brother in Iraq.</p>
@@ -445,12 +500,14 @@
         </div>
 
         <div class="slide fullscreen slide-bg-1">
-            <img src="https://images.unsplash.com/photo-1468581264429-2548ef9eb732?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Full screen image" class="slide-image">
+            <img src="/images/Bibby_Webs_18.jpg" alt="On Chesil Beach" class="slide-image">
+            <div class="slide-caption">
+                <h2>On Chesil Beach</h2>
+            </div>
         </div>
-        
 
-        <div class="slide slide-bg-2">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='500' viewBox='0 0 900 500'%3E%3Crect width='900' height='500' fill='%232E8B57'/%3E%3Ctext x='450' y='250' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 3%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+        <div class="slide slide-bg-3">
+            <img src="/images/Bibby_Webs_30.jpg" alt="James in Albion Stone" class="slide-image">
             <div class="slide-caption">
                 <h2>James in Albion Stone</h2>
                 <p>James, a Maasai warrior and farmer, was forced to flee Kenya after intervening and rescuing girls from FGM. Here, he stands in a quarry of Portland stone, the same stone used to build St. Paul's Cathedral and Buckingham Palace. James spent eight months on the barge.</p>
@@ -458,91 +515,109 @@
 
         </div>
 
-        <div class="slide slide-bg-1">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700' viewBox='0 0 700 700'%3E%3Crect width='700' height='700' fill='%234682B4'/%3E%3Ctext x='350' y='350' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 4%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+        <div class="slide slide-bg-2">
+            <img src="/images/Bibby_Webs_6.jpg" alt="Justice Knows No Borders" class="slide-image">
             <div class="slide-caption">
-                <h2>Military Exercises</h2>
+                <h2>Justice Knows No Borders</h2>
+                <p>The Friendship Group unfurl a protest banner made by Ed Hall. The men encountered Ed's bespoke banner, featuring the barge and depictions of themselves, by chance at the Tolpuddle Festival.</p>
             </div>
         </div>
 
-        <div class="slide slide-bg-3">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='500' viewBox='0 0 800 500'%3E%3Crect width='800' height='500' fill='%235F9EA0'/%3E%3Ctext x='400' y='250' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 5%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+        <div class="slide slide-double slide-bg-2">
+            <img src="/images/Bibby_Webs_25.jpg" alt="Last Night Bus" class="slide-image">
+            <img src="/images/Bibby_Webs_24.jpg" alt="Last Night Bus" class="slide-image">
             <div class="slide-caption">
-                <h2>Saeed on Chesil Beach</h2>
+                <h2>Last Night Bus</h2>
+                <p>The men did not have freedom of movement. Rather a shuttle bus would take them in and out of the private port where the barge was docked.</p>
+            </div>
+        </div>
+
+        <div class="slide slide-bg-2">
+            <img src="/images/Bibby_Webs_10.jpg" alt="Saeed on Chesil Beach" class="slide-image">
+            <div class="slide-caption">
+                <h2>Saeed on<br> 
+                Chesil Beach</h2>
                 <p>After receiving a fishing rod from the Friendship Group, Saeed taught himself how to fish. He often spent nights alone on Chesil Beach, catching mackerel. The next day, he would cook his catch for other men on the beach. One night, Saeed caught 60 mackerel.</p>
             </div>
         </div>
 
-        <div class="slide slide-bg-2">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='900' viewBox='0 0 600 900'%3E%3Crect width='600' height='900' fill='%232E8B57'/%3E%3Ctext x='300' y='450' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 6%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
-            <div class="slide-caption">
-                <h2>On Chesil Beach</h2>
-            </div>
+        <div class="slide fullscreen slide-bg-2">
+            <img src="/images/Bibby_Webs_32.jpg" alt="Saeed on Chesil Beach" class="slide-image">
         </div>
 
-        <div class="slide slide-bg-1">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='850' height='600' viewBox='0 0 850 600'%3E%3Crect width='850' height='600' fill='%234682B4'/%3E%3Ctext x='425' y='300' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 7%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+        <div class="slide slide-double slide-bg-3">
+            <img src="/images/Bibby_Webs_22.jpg" alt="The Coastal Path" class="slide-image">
+            <img src="/images/Bibby_Webs_21.jpg" alt="Bee Orchid" class="slide-image">
             <div class="slide-caption">
                 <h2>The Coastal Path</h2>
                 <p>Close friends Dave, a local Portlander and historian, and Wilfred, an Ivorian seeking asylum, often walked the coastal path together. Here Dave shows Wilfred a rare bee orchid he found.</p>
             </div>
-
         </div>
 
-        <div class="slide slide-bg-3">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='800' viewBox='0 0 500 800'%3E%3Crect width='500' height='800' fill='%235F9EA0'/%3E%3Ctext x='250' y='400' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 8%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+        <div class="slide fullscreen slide-bg-3">
+            <img src="/images/Bibby_Webs_3.jpg" alt="Language Cards" class="slide-image">
             <div class="slide-caption">
-                <h2>Bee Orchid</h2>
+                <h2>Language Cards</h2>
             </div>
         </div>
 
-        <div class="slide slide-bg-2">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='600' viewBox='0 0 900 600'%3E%3Crect width='900' height='600' fill='%232E8B57'/%3E%3Ctext x='450' y='300' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 9%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+        <div class="slide fullscreen slide-bg-1">
+            <img src="/images/Bibby_Webs_26.jpg" alt="Sef giving a lift" class="slide-image">
             <div class="slide-caption">
-                <h2>Hassan &amp; Wilfred</h2>
+                <h2>Sef giving a lift</h2>
             </div>
         </div>
 
-        <div class="slide slide-bg-1">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='800' viewBox='0 0 700 800'%3E%3Crect width='700' height='800' fill='%234682B4'/%3E%3Ctext x='350' y='400' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 10%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+        <div class="slide slide-double slide-bg-2">
+            <img src="/images/Bibby_Webs_9.jpg" alt="Raymond at Portland Bill" class="slide-image">
+            <img src="/images/Bibby_Webs_17.jpg" alt="Raymond at Portland Bill" class="slide-image">
             <div class="slide-caption">
-                <h2>Royjar</h2>  
-                <p>Royjar was forced to flee Iran after he helped organise the Mahsa Amini uprising. Onboard the Bibby, Royjar helped orchestrate the hunger strikes demanding its closure. He volunteered in charity shops and would often swim off Weymouth beach.</p>
-            </div>
-        </div>
-
-        <div class="slide slide-bg-3">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='700' viewBox='0 0 800 700'%3E%3Crect width='800' height='700' fill='%235F9EA0'/%3E%3Ctext x='400' y='350' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 11%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
-            <div class="slide-caption">
-                <h2>Royjar in the English Channel</h2>
+                <h2>Raymond at Portland Bill</h2>
             </div>
 
         </div>
 
-        <div class="slide slide-bg-2">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'%3E%3Crect width='600' height='600' fill='%232E8B57'/%3E%3Ctext x='300' y='300' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 12%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
-            <div class="slide-caption">
-                <h2>Weymouth Seafront</h2>
-                <p>People seeking asylum are legally unable to work and only get payments of &pound;8.86 a week. Therefore for the men, much time was spent waiting on Weymouth seafront.</p>
-            </div>
-        </div>
-
-        <div class="slide slide-bg-1">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='750' height='650' viewBox='0 0 750 650'%3E%3Crect width='750' height='650' fill='%234682B4'/%3E%3Ctext x='375' y='325' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 13%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+        <div class="slide fullscreen slide-bg-1">
+            <img src="/images/Bibby_Webs_15.jpg" alt="Morning Swim" class="slide-image">
             <div class="slide-caption">
                 <h2>Morning Swim</h2>
             </div>
         </div>
 
-        <div class="slide slide-bg-3">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='650' height='850' viewBox='0 0 650 850'%3E%3Crect width='650' height='850' fill='%235F9EA0'/%3E%3Ctext x='325' y='425' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 14%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+        <div class="slide slide-double slide-bg-2">
+            <img src="/images/Bibby_Webs_5.jpg" alt="Placeholder" class="slide-image">
+            <img src="/images/Bibby_Webs_20.jpg" alt="Placeholder" class="slide-image">
             <div class="slide-caption">
-                <h2>Boxing Class</h2>
+                <h2>Efrem at the Portland Community Venue</h2>
+                <p>Like many Eritreans on the barge, Efrem fled human rights abuses and the indefinite, voluntary conscription of his homeland.</p>
             </div>
         </div>
 
-        <div class="slide slide-bg-2">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='550' viewBox='0 0 800 550'%3E%3Crect width='800' height='550' fill='%232E8B57'/%3E%3Ctext x='400' y='275' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 15%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+        <div class="slide slide-bg-1">
+            <img src="/images/Bibby_Webs_4.jpg" alt="James at the community allotment" class="slide-image">
+            <div class="slide-caption">
+                <h2>James at the community allotment</h2>
+            </div>
+        </div>
+
+        <div class="slide slide-bg-3">
+            <img src="/images/Bibby_Webs_2.jpg" alt="Annie and Simon's garden" class="slide-image">
+            <div class="slide-caption">
+                <h2>Annie and Simon's garden</h2>
+                <p>A summer BBQ thanking the men for digging out and building a local pond. On the day of the party there were violent right-wing protests across the UK, including one in nearby Weymouth.</p>
+            </div>
+        </div>
+
+        <div class="slide slide-bg-3">
+            <img src="/images/Bibby_Webs_12.jpg" alt="Davide" class="slide-image">
+            <div class="slide-caption">
+                <h2>Davide</h2>
+                <p>Davide (right), from Colombia, was still a teenager when moved to the barge. Photographed here with his boyfriend who he met in Weymouth. Davide spent many days staying at Laney's home. She helped him get a job in elderly care after the Bibby he got his refugee status.</p>
+            </div>
+        </div>
+
+        <div class="slide slide-bg-1">
+            <img src="/images/Bibby_Webs_27.jpg" alt="Shoe Donation" class="slide-image">
             <div class="slide-caption">
                 <h2>Shoe Donation</h2>
                 <p>A group of men gather around Kay and Gary's car as they deliver trainers supplied by Care4Calais.</p>
@@ -551,40 +626,33 @@
         </div>
 
         <div class="slide slide-bg-1">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='700' viewBox='0 0 900 700'%3E%3Crect width='900' height='700' fill='%234682B4'/%3E%3Ctext x='450' y='350' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 16%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+            <img src="/images/Bibby_Webs_8.jpg" alt="Afghan Cricket" class="slide-image">
             <div class="slide-caption">
-                <h2>Annie and Simon's garden</h2>
-                <p>A summer BBQ thanking the men for digging out and building a local pond. On the day of the party there were violent right-wing protests across the UK, including one in nearby Weymouth.</p>
-            </div>
-        </div>
-
-        <div class="slide slide-bg-3">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='550' height='750' viewBox='0 0 550 750'%3E%3Crect width='550' height='750' fill='%235F9EA0'/%3E%3Ctext x='275' y='375' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 17%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
-            <div class="slide-caption">
-                <h2>Lucy at the community venue and saying goodbye</h2>
+                <h2>Afghan Cricket</h2>
+                <p>A cricket game, played by a group of Afghan men who had just met on their first day aboard the Bibby Stockholm. The men were later invited to play for the local Portland Red Triangle Cricket Club.</p>
             </div>
         </div>
 
         <div class="slide slide-bg-2">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='600' viewBox='0 0 700 600'%3E%3Crect width='700' height='600' fill='%232E8B57'/%3E%3Ctext x='350' y='300' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 18%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+            <img src="/images/Bibby_Webs_16.jpg" alt="Saeed Praying" class="slide-image">
             <div class="slide-caption">
-                <h2>Language Cards</h2>
+                <h2>Saeed Praying</h2>
+                <p>Saeed, one of the avid cricket players takes a moment to pray before a practice session.</p>
             </div>
         </div>
 
-        <div class="slide slide-bg-1">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='650' viewBox='0 0 800 650'%3E%3Crect width='800' height='650' fill='%234682B4'/%3E%3Ctext x='400' y='325' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 19%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
-            <div class="slide-caption">
-                <h2>Efrem at the Portland Community Venue</h2>
-                <p>Like many Eritreans on the barge, Efrem fled human rights abuses and the indefinite, voluntary conscription of his homeland.</p>
-            </div>
-
-        </div>
-
-        <div class="slide slide-bg-3">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='750' viewBox='0 0 600 750'%3E%3Crect width='600' height='750' fill='%235F9EA0'/%3E%3Ctext x='300' y='375' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3EPhoto 20%3C/text%3E%3C/svg%3E" alt="Placeholder" class="slide-image">
+        <div class="slide fullscreen slide-bg-1">
+            <img src="/images/Bibby_Webs_19.jpg" alt="I Missed The Bread" class="slide-image">
             <div class="slide-caption">
                 <h2>I Missed The Bread</h2>
+            </div>
+        </div>
+
+        <div class="slide slide-bg-2">
+            <img src="/images/Bibby_Webs_31.jpg" alt="Stand Up To Racism" class="slide-image">
+            <div class="slide-caption">
+                <h2>Thank You</h2>
+                <p>Theo McInnes and Thomas Ralph</p>
             </div>
         </div>
     </div>
@@ -631,7 +699,6 @@
         <p>For inquiries about Bibby Boys, exhibition opportunities, or to share your thoughts on this project:</p>
         <p><strong>Theo McInnes & Thomas Ralph</strong></p>
         <p>Email: [Contact Email]</p>
-        <p>We'd love to chat about how we might collaborate to bring Bibby Boys to life...</p>
     </div>
 
     <script>
